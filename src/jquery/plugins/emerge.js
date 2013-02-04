@@ -1,4 +1,4 @@
-/*!
+/*
  * Qoopido Emerge jQuery plugin
  *
  * Source:  Qoopido Emerge
