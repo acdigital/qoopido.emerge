@@ -1,0 +1,32 @@
+{
+  "name": "qoopido.emerge",
+  "title": "Qoopido Emerge",
+  "description": "jQuery plugin to react on elements entering or nearing the visible area.",
+  "version": "1.1.8",
+  "homepage": "https://github.com/dlueth/qoopido.emerge",
+  "author": {
+    "name": "Dirk Lüth",
+    "email": "info@qoopido.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dlueth/qoopido.emerge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dlueth/qoopido.emerge/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    },
+    {
+      "type": "GPL",
+      "url": "http://www.gnu.org/copyleft/gpl.html"
+    }
+  ],
+  "dependencies": {
+    "jquery": ">= 1.7"
+  },
+  "keywords": []
+}

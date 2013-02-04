@@ -1,0 +1,3 @@
+[submodule "vendor/qoopido.js"]
+	path = vendor/qoopido.js
+	url = git://github.com/dlueth/qoopido.js.git
