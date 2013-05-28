@@ -2,8 +2,8 @@
 * Qoopido Emerge jQuery plugin
 *
 * Source:  Qoopido Emerge
-* Version: 1.1.9
-* Date:    2013-02-08
+* Version: 1.1.10
+* Date:    2013-05-28
 * Author:  Dirk Lüth <info@qoopido.com>
 * Website: https://github.com/dlueth/qoopido.emerge
 *
@@ -13,7 +13,6 @@
 *  - http://www.opensource.org/licenses/mit-license.php
 *  - http://www.gnu.org/copyleft/gpl.html
 */
-
 ;(function(definition, window, document, undefined) {
 	'use strict';
 
@@ -195,9 +194,10 @@
 }(function(mJquery, mBase, mUnique, window, document, undefined) {
 	'use strict';
 
-	var // properties
+	var
+	// properties
 		name     = 'emerge',
-		defaults = { interval: 20, threshold: 'auto', recur: true, auto: 0.5, visibility: true },
+		defaults = { interval: 50, threshold: 'auto', recur: true, auto: 0.5, visibility: true },
 		$window  = mJquery(window),
 
 	// methods / classes
@@ -221,15 +221,16 @@
 	};
 
 	tick = function tick(interval) {
-		var i;
+		var index,
+			pointer = emerge._elements[interval];
 
-		for(i in emerge._elements[interval]) {
-			if(emerge._elements[interval][i]._checkState !== undefined) {
-				emerge._elements[interval][i]._checkState();
+		for(index in pointer) {
+			if(pointer[index]._checkState !== undefined) {
+				pointer[index]._checkState();
 			}
 		}
 
-		if(emerge._elements[interval].length === 0) {
+		if(pointer.length === 0) {
 			window.clearInterval(emerge._intervals[interval]);
 
 			delete emerge._intervals[interval];
@@ -257,7 +258,7 @@
 			}
 
 			if(emerge._intervals[settings.interval] === undefined) {
-				emerge._elements[settings.interval]  = emerge._elements[settings.interval] || {};
+				emerge._elements[settings.interval]  = emerge._elements[settings.interval] || { length: 0 };
 				emerge._intervals[settings.interval] = window.setInterval(function() { tick(settings.interval); }, settings.interval);
 			}
 
@@ -269,7 +270,8 @@
 			self._priority = 2;
 			self._uuid     = mUnique.uuid();
 
-			emerge._elements[self._settings.interval][self._uuid] = self;
+			emerge._elements[settings.interval][self._uuid] = self;
+			emerge._elements[settings.interval].length++;
 
 			$window.on(LISTENER_RESIZE, function() { self._onResize.call(self); });
 			self._onResize();
@@ -321,6 +323,7 @@
 			var self = this;
 
 			delete emerge._elements[self._settings.interval][self._uuid];
+			emerge._elements[self._settings.interval].length--;
 		},
 		_onResize: function() {
 			var self = this,
