@@ -17,7 +17,7 @@
 		"area",
 		"appear"
 	],
-	"version": "1.1.9",
+	"version": "1.1.10",
 	"author": {
 		"name": "Dirk Lüth",
 		"url": "http://www.qoopido.com"
@@ -46,7 +46,7 @@
 	"bugs": "https://github.com/dlueth/qoopido.emerge/issues",
 	"homepage": "https://github.com/dlueth/qoopido.emerge",
 	"docs": "https://github.com/dlueth/qoopido.emerge",
-	"download": "https://github.com/dlueth/qoopido.emerge/blob/master/packages/qoopido.emerge.zip?raw=true",
+	"download": "https://github.com/dlueth/qoopido.emerge/blob/master/packages/1.1.10/qoopido.emerge.zip?raw=true",
 	"dependencies": {
 		"jquery": ">=1.7"
 	}
