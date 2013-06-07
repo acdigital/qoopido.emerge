@@ -34,7 +34,7 @@ module.exports = function (grunt) {
 				force: true
 			},
 			build: ['dist/<%= pkg.version %>/**/*'],
-			package: ['packages/<%= pkg.version %>/**/*']
+			package: ['packages/qoopido.emerge.<%= pkg.version %>*']
 		},
 		copy: {
 			build: {
@@ -61,13 +61,13 @@ module.exports = function (grunt) {
 					'vendor/qoopido.js/src/unique.js',
 					'src/jquery/plugins/emerge.js'
 				],
-				dest:'packages/<%= pkg.version %>/qoopido.emerge.js'
+				dest:'packages/qoopido.emerge.<%= pkg.version %>.js'
 			}
 		},
 		uglify:{
 			package:{
 				files:{
-					'packages/<%= pkg.version %>/qoopido.emerge.min.js': ['packages/<%= pkg.version %>/qoopido.emerge.js']
+					'packages/qoopido.emerge.<%= pkg.version %>.min.js': ['packages/qoopido.emerge.<%= pkg.version %>.js']
 				}
 			}
 		},
@@ -77,9 +77,9 @@ module.exports = function (grunt) {
 					mode:'zip',
 					level:1,
 					pretty:true,
-					archive: 'packages/<%= pkg.version %>/qoopido.emerge.zip'
+					archive: 'packages/qoopido.emerge.<%= pkg.version %>.zip'
 				},
-				src: ['packages/<%= pkg.version %>/*.js'],
+				src: ['packages/qoopido.emerge.<%= pkg.version %>*.js'],
 				flatten: true
 			}
 		}
