@@ -1,3 +1,178 @@
+/*!
+* Qoopido Emerge jQuery plugin
+*
+* Source:  Qoopido Emerge
+* Version: 1.1.12
+* Date:    2013-06-07
+* Author:  Dirk Lüth <info@qoopido.com>
+* Website: https://github.com/dlueth/qoopido.emerge
+*
+* Copyright (c) 2013 Dirk Lüth
+*
+* Licensed under the MIT and GPL license.
+*  - http://www.opensource.org/licenses/mit-license.php
+*  - http://www.gnu.org/copyleft/gpl.html
+*/
+;(function(definition, window, document, undefined) {
+	'use strict';
+
+	var namespace  = 'qoopido',
+		name       = 'base',
+		initialize = function initialize() {
+			[].push.apply(arguments, [ window, document, undefined ]);
+
+			window[namespace] = window[namespace] || { };
+
+			return (window[namespace][name] = definition.apply(null, arguments));
+		};
+
+	if(typeof define === 'function' && define.amd) {
+		define(initialize);
+	} else {
+		initialize();
+	}
+}(function(window, document, undefined) {
+	'use strict';
+
+	var supportsEs5 = !!(Object.getOwnPropertyNames && Array.prototype.forEach && Object.getOwnPropertyDescriptor);
+
+	if(Object.create === undefined) {
+		Object.create = function(prototype, properties) {
+			var object;
+
+			if (prototype === null) {
+				object = { '__proto__': null };
+			} else {
+				if(typeof prototype !== 'object') {
+					throw new TypeError('typeof prototype[' + (typeof prototype) + '] != "object"');
+				}
+
+				var Type = function () {};
+				Type.prototype = prototype;
+
+				object = new Type();
+				object.__proto__ = prototype;
+			}
+
+			if(properties !== undefined) {
+				Object.defineProperties(object, properties);
+			}
+
+			return object;
+		};
+	}
+
+	if(Object.getOwnPropertyDescriptors === undefined) {
+		Object.getOwnPropertyDescriptors = function(object) {
+			var descriptors = {};
+
+			Object.getOwnPropertyNames(object).forEach(function(property) {
+				descriptors[property] = Object.getOwnPropertyDescriptor(object, property);
+			});
+
+			return descriptors;
+		};
+	}
+
+	return {
+		create: function create() {
+			var instance = Object.create(this);
+
+			if(instance._constructor) {
+				instance._constructor.apply(instance, arguments);
+			}
+
+			instance.create = instance.extend = undefined;
+
+			return instance;
+		},
+		extend: function extend(properties) {
+			properties         = properties || {};
+			properties._parent = this;
+
+			if(supportsEs5 === true) { // Primary version for ECMAScript 5 compatible browsers
+				return Object.create(this, Object.getOwnPropertyDescriptors(properties));
+			} else { // Fallback version for non ECMAScript 5 compatible browsers
+				var extended = Object.create(this),
+					property;
+
+				for(property in properties) {
+					if(property !== '__proto__') {
+						extended[property] = properties[property];
+					}
+				}
+
+				return Object.create(extended);
+			}
+		}
+	};
+}, window, document));
+;(function(definition, window, document, undefined) {
+	'use strict';
+
+	var namespace  = 'qoopido',
+		name       = 'unique',
+		initialize = function initialize() {
+			[].push.apply(arguments, [ window, document, undefined ]);
+
+			window[namespace] = window[namespace] || { };
+
+			return (window[namespace][name] = definition.apply(null, arguments));
+		};
+
+	if(typeof define === 'function' && define.amd) {
+		define([ './base' ], initialize);
+	} else {
+		initialize(window[namespace].base);
+	}
+}(function(mBase, window, document, undefined) {
+	'use strict';
+
+	var result, j, x, i,
+		lookup     = { uuid: { }, string: { } },
+		characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+	function generateUuid() {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			var r = Math.random() * 16 | 0,
+				v = (c === 'x') ? r : (r & 0x3 | 0x8);
+
+			return v.toString(16);
+		});
+	}
+
+	function generateString(length) {
+		length = parseInt(length, 10) || 12;
+		result = '';
+
+		for(i = 0; i < length; i++) {
+			result += characters[parseInt(Math.random() * (characters.length - 1), 10)];
+		}
+
+		return result;
+	}
+
+	return mBase.extend({
+		uuid: function uuid() {
+			do {
+				result = generateUuid();
+			} while(typeof lookup.uuid[result] !== 'undefined');
+
+			lookup.uuid[result] = true;
+
+			return result;
+		},
+		string: function string(length) {
+			do {
+				result = generateString(length);
+			} while(typeof lookup.string[result] !== 'undefined');
+
+			lookup.string[result] = true;
+
+			return result;
+		}
+	});
+}, window, document));
 ;(function(definition, window, document, undefined) {
 	'use strict';
 
