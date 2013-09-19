@@ -1,3 +1,5 @@
+** I re-integrated Emerge into my Qoopido.js library, so this repo will become obsolet!!! **
+
 Qoopido Emerge
 ===========================
 jQuery plugin to react on elements entering or nearing the visible area.
